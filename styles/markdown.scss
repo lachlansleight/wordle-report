@@ -1,0 +1,21 @@
+.markdownWrapper {
+    p {
+        @apply mb-4;
+    }
+
+    ul,
+    ol {
+        list-style: disc;
+        margin-left: 1em;
+        padding-left: 1em;
+        margin-bottom: 1em;
+    }
+
+    h1 {
+        @apply text-4xl mb-4;
+    }
+
+    h2 {
+        @apply text-2xl mb-4;
+    }
+}
