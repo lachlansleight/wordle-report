@@ -13000,7 +13000,7 @@ export const getCluesAfterGuess = (
                 possibilities[i] = possibilities[i].filter(letter => letter !== guess[i]);
                 break;
             case "incorrect":
-                possibilities = possibilities.map(point => point.filter(l => l !== guess[i]));
+                possibilities = possibilities.map(point => point.length === 1 ? point : point.filter(l => l !== guess[i]));
                 break;
         }
     });
