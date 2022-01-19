@@ -12990,18 +12990,20 @@ export const getCluesAfterGuess = (
 
     let possibilities: string[][] = JSON.parse(JSON.stringify(possibilitiesBefore));
 
-    for (let i = 0; i < guess.length; i++) {
-        const letterCorrect = guess[i] === target[i];
-        const letterPartial = target.includes(guess[i]) && !letterCorrect;
-
-        //if it's correct, then this is the only letter that position can be
-        if (letterCorrect) possibilities[i] = [guess[i]];
-        //if yellow, then it cannot appear at this position - but it's not ruled out from being elsewhere
-        else if (letterPartial)
-            possibilities[i] = possibilities[i].filter(letter => letter !== guess[i]);
-        //if grey, then it cannot be anywhere
-        else possibilities = possibilities.map(point => point.filter(l => l !== guess[i]));
-    }
+    const guessEval = evaluateGuess(guess, target);
+    guessEval.forEach((g, i) => {
+        switch(g) {
+            case "correct":
+                possibilities[i] = [guess[i]];
+                break;
+            case "partial":
+                possibilities[i] = possibilities[i].filter(letter => letter !== guess[i]);
+                break;
+            case "incorrect":
+                possibilities = possibilities.map(point => point.filter(l => l !== guess[i]));
+                break;
+        }
+    });
 
     validWords = validWords.filter(word => {
         for (let i = 0; i < word.length; i++) {
@@ -13011,3 +13013,31 @@ export const getCluesAfterGuess = (
     });
     return { validWords, possibilities };
 };
+
+export type evaluation = "correct" | "incorrect" | "partial";
+export const evaluateGuess = (guess: string, target: string): evaluation[] => {
+    const output: evaluation[] = Array(guess.length).fill("incorrect");
+    for(let i = 0; i < guess.length; i++) {
+        if(guess[i] === target[i]) {
+            output[i] = "correct";
+            continue;
+        }
+        const letterPartial = target.includes(guess[i]);
+        if(letterPartial) output[i] = "partial";
+    }
+    
+    //partial fix - if they have already found all instances of a letter, it is not a partial
+    for(let i = 0; i < guess.length; i++) {
+        if(output[i] !== "partial") continue;
+        let correctCount = 0;
+        let targetCount = 0;
+        for(let j = 0; j < guess.length; j++) {
+            if(target[j] === guess[i]) targetCount++;
+            if(output[j] !== "correct") continue;
+            if(guess[j] !== guess[i]) continue;
+            correctCount++;
+        }
+        if(correctCount === targetCount) output[i] = "incorrect";
+    }
+    return output;
+}

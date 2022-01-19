@@ -1,14 +1,16 @@
+import { evaluation } from "lib/wordList";
+
 const Letter = ({
     letter,
-    state = "neutral",
+    state = "incorrect",
 }: {
     letter: string;
-    state: "neutral" | "partial" | "correct";
+    state: evaluation;
 }): JSX.Element => {
     return (
         <div
             className={`grid place-items-center rounded w-16 py-2 ${
-                state === "neutral"
+                state === "incorrect"
                     ? "bg-neutral-700"
                     : state === "partial"
                     ? "bg-yellow-600"
