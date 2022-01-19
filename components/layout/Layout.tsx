@@ -10,7 +10,7 @@ const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
     return (
         <>
             <Head>
-                <title>NextJS Template</title>
+                <title>Wordle Report</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header pathName={router ? router.pathname : "/"} />
