@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { applyCypher } from "lib/encoding";
 import Layout from "../components/layout/Layout";
-import wordList from "../lib/wordList";
+import {targetWords, nonTargetWords} from "../lib/wordList";
 
 export const Home = (): JSX.Element => {
     const router = useRouter();
@@ -19,7 +19,7 @@ export const Home = (): JSX.Element => {
         }
 
         
-        if(!wordList.includes(target)) {
+        if(!targetWords.includes(target)) {
             setError("Solution '" + target + "' isn't in the word list");
             setIsValid(false);
             return;
@@ -31,7 +31,7 @@ export const Home = (): JSX.Element => {
             return;
         }
         for (let i = 0; i < guessArray.length; i++) {
-            if(!wordList.includes(guessArray[i])) {
+            if(!targetWords.includes(guessArray[i]) && !nonTargetWords.includes(guessArray[i])) {
                 setError("Word list doesn't contain '" + guessArray[i] + "'");
                 setIsValid(false);
                 return;

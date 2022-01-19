@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import WordList, { getCluesAfterGuess } from "lib/wordList";
+import { targetWords, getCluesAfterGuess } from "lib/wordList";
 import { buildStartingClues, GameReport, GameState } from "lib/types";
 import Report from "./Report";
 
@@ -23,7 +23,7 @@ const GameReportDisplay = ({ words, target }: { words: string[]; target: string 
                 cluesAfter: guessState.possibilities,
                 validWords: guessState.validWords,
                 validWordsBefore:
-                    i === 0 ? WordList.length : gr.guesses.slice(-1)[0].validWords.length,
+                    i === 0 ? targetWords.length : gr.guesses.slice(-1)[0].validWords.length,
             };
             possibilities = guessState.possibilities;
 

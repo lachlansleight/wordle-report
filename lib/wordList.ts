@@ -1,4 +1,4 @@
-const words: string[] = [
+export const targetWords: string[] = [
     "cigar",
     "rebut",
     "sissy",
@@ -2316,7 +2316,7 @@ const words: string[] = [
     "shave",
 ];
 
-export const weirdWords: string[] = [
+export const nonTargetWords: string[] = [
     "aahed",
     "aalii",
     "aargh",
@@ -12976,6 +12976,8 @@ export const weirdWords: string[] = [
     "zymic",
 ];
 
+export const allWords = [...targetWords, ...nonTargetWords].sort();
+
 export const getCluesAfterGuess = (
     guess: string,
     target: string,
@@ -12984,7 +12986,7 @@ export const getCluesAfterGuess = (
     validWords: string[];
     possibilities: string[][];
 } => {
-    let validWords = [...words];
+    let validWords = [...targetWords];
 
     let possibilities: string[][] = JSON.parse(JSON.stringify(possibilitiesBefore));
 
@@ -13009,5 +13011,3 @@ export const getCluesAfterGuess = (
     });
     return { validWords, possibilities };
 };
-
-export default words;
