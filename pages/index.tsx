@@ -19,12 +19,12 @@ export const Home = (): JSX.Element => {
         }
 
         
-        if(!targetWords.includes(target)) {
+        if(!targetWords.includes(target.trim())) {
             setError("Solution '" + target + "' isn't in the word list");
             setIsValid(false);
             return;
         }
-        const guessArray = guesses.split("\n").filter(guess => guess.length > 0);
+        const guessArray = guesses.split("\n").map(guess => guess.trim()).filter(guess => guess.length > 0);
         if (guessArray.length === 0) {
             setError("Need at least one guess");
             setIsValid(false);
@@ -69,9 +69,9 @@ export const Home = (): JSX.Element => {
                     disabled={!isValid}
                     onClick={() =>
                         router.push(
-                            `/report?target=${applyCypher(target, 10)}&guesses=${guesses
+                            `/report?target=${applyCypher(target.trim(), 10)}&guesses=${guesses
                                 .split("\n")
-                                .map((word, i) => applyCypher(word, (i + 1) * 17))
+                                .map((word, i) => applyCypher(word.trim(), (i + 1) * 17))
                                 .join(",")}`
                         )
                     }
