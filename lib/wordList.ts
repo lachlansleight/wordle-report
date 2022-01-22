@@ -1,3 +1,5 @@
+import { GameState } from "./types";
+
 export const targetWords: string[] = [
     "cigar",
     "rebut",
@@ -13040,4 +13042,20 @@ export const evaluateGuess = (guess: string, target: string): evaluation[] => {
         if(correctCount === targetCount) output[i] = "incorrect";
     }
     return output;
+}
+
+export const getGameStateCode = (state: GameState, target: string): string => {
+    const wordCode = state.evaluationAfter.map(e => {
+        switch(e) {
+            case "correct":
+                return "🟩";
+            case "partial":
+                return "🟨";
+            case "incorrect":
+                return "⬛";
+        }
+        return "";
+    }).join("");
+    const postCode = state.guess === target ? "✔️" : state.validWords.length;
+    return wordCode + " " + postCode;
 }

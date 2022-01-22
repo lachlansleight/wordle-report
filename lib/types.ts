@@ -1,3 +1,5 @@
+import { evaluation } from "./wordList";
+
 export interface Clues {
     correctLetters: string[];
     partialLetters: string[];
@@ -14,6 +16,7 @@ export interface GameState {
     cluesAfter: string[][];
     validWords: string[];
     validWordsBefore: number;
+    evaluationAfter: evaluation[];
 }
 
 export const buildStartingClues = (): string[][] => {
