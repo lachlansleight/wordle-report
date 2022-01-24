@@ -1,4 +1,4 @@
-import { evaluation } from "lib/wordList";
+import { evaluation } from "lib/types";
 
 const Letter = ({
     letter,

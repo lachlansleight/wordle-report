@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { targetWords, getCluesAfterGuess, evaluateGuess, getGameStateCode } from "lib/wordList";
-import { buildStartingClues, GameReport, GameState } from "lib/types";
-import Report from "./Report";
 import CopyToClipboard from "react-copy-to-clipboard";
+import { targetWords } from "lib/wordList";
+import { buildStartingClues, GameReport, GameState } from "lib/types";
+import { getCluesAfterGuess, evaluateGuess, getGameStateCode } from "lib/guessing";
+import Report from "./Report";
 
 const GameReportDisplay = ({ words, target }: { words: string[]; target: string }): JSX.Element => {
     const [gameReport, setGameReport] = useState<GameReport>({
@@ -53,8 +54,18 @@ const GameReportDisplay = ({ words, target }: { words: string[]; target: string 
                     />
                 );
             })}
-            <CopyToClipboard onCopy={() => setCopied(true)} text={"World Report\n\n" + gameReport.guesses.map(guess => getGameStateCode(guess, gameReport.targetWord)).join("\n")}>
-                <p className="text-center mt-8 text-lg">{copied ? "Copied!" : "Copy to Clipboard"}</p>
+            <CopyToClipboard
+                onCopy={() => setCopied(true)}
+                text={
+                    "World Report\n\n" +
+                    gameReport.guesses
+                        .map(guess => getGameStateCode(guess, gameReport.targetWord))
+                        .join("\n")
+                }
+            >
+                <p className="text-center mt-8 text-lg">
+                    {copied ? "Copied!" : "Copy to Clipboard"}
+                </p>
             </CopyToClipboard>
         </div>
     );

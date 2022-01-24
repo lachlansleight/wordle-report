@@ -1,5 +1,3 @@
-import { evaluation } from "./wordList";
-
 export interface Clues {
     correctLetters: string[];
     partialLetters: string[];
@@ -29,3 +27,5 @@ export const buildStartingClues = (): string[][] => {
     ];
     return output;
 };
+
+export type evaluation = "correct" | "incorrect" | "partial";

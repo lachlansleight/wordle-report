@@ -1,5 +1,6 @@
+
 import { useState } from "react";
-import { getCluesAfterGuess } from "lib/wordList";
+import { getCluesAfterGuess } from "lib/guessing";
 import Word from "./Word";
 
 const Report = ({

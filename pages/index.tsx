@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { applyCypher } from "lib/encoding";
 import Layout from "../components/layout/Layout";
-import {targetWords, nonTargetWords} from "../lib/wordList";
+import { targetWords, nonTargetWords } from "../lib/wordList";
 
 export const Home = (): JSX.Element => {
     const router = useRouter();
@@ -12,26 +12,28 @@ export const Home = (): JSX.Element => {
     const [isValid, setIsValid] = useState(false);
 
     useEffect(() => {
-        if(!target && !guesses) {
+        if (!target && !guesses) {
             setError("");
             setIsValid(false);
             return;
         }
 
-        
-        if(!targetWords.includes(target.trim())) {
+        if (!targetWords.includes(target.trim())) {
             setError("Solution '" + target + "' isn't in the word list");
             setIsValid(false);
             return;
         }
-        const guessArray = guesses.split("\n").map(guess => guess.trim()).filter(guess => guess.length > 0);
+        const guessArray = guesses
+            .split("\n")
+            .map(guess => guess.trim())
+            .filter(guess => guess.length > 0);
         if (guessArray.length === 0) {
             setError("Need at least one guess");
             setIsValid(false);
             return;
         }
         for (let i = 0; i < guessArray.length; i++) {
-            if(!targetWords.includes(guessArray[i]) && !nonTargetWords.includes(guessArray[i])) {
+            if (!targetWords.includes(guessArray[i]) && !nonTargetWords.includes(guessArray[i])) {
                 setError("Word list doesn't contain '" + guessArray[i] + "'");
                 setIsValid(false);
                 return;
@@ -44,10 +46,12 @@ export const Home = (): JSX.Element => {
     return (
         <Layout>
             <div className="flex flex-col gap-4">
-                
-                <p className="text-xl">Wordle Report will show you how quickly you narrowed down the puzzle&apos;s possible solutions.</p>
+                <p className="text-xl">
+                    Wordle Report will show you how quickly you narrowed down the puzzle&apos;s
+                    possible solutions.
+                </p>
                 <p className="text-xl">Find out whether you played well, or got lucky!</p>
-                <hr/>
+                <hr />
 
                 <label>Today&apos;s Solution</label>
                 <input
