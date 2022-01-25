@@ -4,6 +4,7 @@ import { targetWords } from "lib/wordList";
 import { buildStartingClues, GameReport, GameState } from "lib/types";
 import { getCluesAfterGuess, evaluateGuess, getGameStateCode } from "lib/guessing";
 import Report from "./Report";
+// import ReportGraph from "./ReportGraph";
 
 const GameReportDisplay = ({ words, target }: { words: string[]; target: string }): JSX.Element => {
     const [gameReport, setGameReport] = useState<GameReport>({
@@ -67,6 +68,8 @@ const GameReportDisplay = ({ words, target }: { words: string[]; target: string 
                     {copied ? "Copied!" : "Copy to Clipboard"}
                 </p>
             </CopyToClipboard>
+
+            {/* {gameReport.guesses.length > 0 && <ReportGraph report={gameReport} />} */}
         </div>
     );
 };
