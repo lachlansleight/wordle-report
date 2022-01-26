@@ -7,12 +7,14 @@ const Report = ({
     target,
     validWords,
     possibilities,
+    required,
     validWordsBefore,
 }: {
     guess: string;
     target: string;
     validWords: string[];
     possibilities: string[][];
+    required: string[];
     validWordsBefore: number;
 }): JSX.Element => {
     const [isOpen, setIsOpen] = useState(false);
@@ -35,7 +37,12 @@ const Report = ({
                 <ul className="pl-4">
                     {validWords
                         .map(word => {
-                            const guessResult = getCluesAfterGuess(word, target, possibilities);
+                            const guessResult = getCluesAfterGuess(
+                                word,
+                                target,
+                                possibilities,
+                                required
+                            );
                             return {
                                 word,
                                 validCount: guessResult.validWords.length,

@@ -15,6 +15,7 @@ export interface GameState {
     validWords: string[];
     validWordsBefore: number;
     evaluationAfter: evaluation[];
+    requiredAfter: string[];
 }
 
 export const buildStartingClues = (): string[][] => {

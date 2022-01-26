@@ -4,26 +4,28 @@ import { targetWords } from "./wordList";
 export const getCluesAfterGuess = (
     guess: string,
     target: string,
-    possibilitiesBefore: string[][]
+    possibilitiesBefore: string[][],
+    requiredBefore: string[]
 ): {
     validWords: string[];
     possibilities: string[][];
+    required: string[];
 } => {
     let validWords = [...targetWords];
 
     let possibilities: string[][] = JSON.parse(JSON.stringify(possibilitiesBefore));
 
     const guessEval = evaluateGuess(guess, target);
-    const requiredLetters: string[] = [];
+    const required: string[] = [...requiredBefore];
     guessEval.forEach((g, i) => {
         switch (g) {
             case "correct":
                 possibilities[i] = [guess[i]];
-                requiredLetters.push(guess[i]);
+                if (!required.includes(guess[i])) required.push(guess[i]);
                 break;
             case "partial":
                 possibilities[i] = possibilities[i].filter(letter => letter !== guess[i]);
-                requiredLetters.push(guess[i]);
+                if (!required.includes(guess[i])) required.push(guess[i]);
                 break;
             case "incorrect":
                 possibilities = possibilities.map(point =>
@@ -38,9 +40,9 @@ export const getCluesAfterGuess = (
             if (!possibilities[i].includes(word[i])) return false;
         }
         //make sure that all the letters that we know are in the word are present
-        return requiredLetters.reduce<boolean>((acc, letter) => acc && word.includes(letter), true);
+        return required.reduce<boolean>((acc, letter) => acc && word.includes(letter), true);
     });
-    return { validWords, possibilities };
+    return { validWords, possibilities, required };
 };
 
 export const evaluateGuess = (guess: string, target: string): evaluation[] => {

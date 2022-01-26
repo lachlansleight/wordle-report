@@ -12,7 +12,8 @@ const ReportGraph = ({ report }: { report: GameReport }): JSX.Element => {
                     const guessResult = getCluesAfterGuess(
                         word,
                         report.targetWord,
-                        report.guesses[i].cluesAfter
+                        report.guesses[i].cluesAfter,
+                        report.guesses[i].requiredAfter
                     );
                     return {
                         word,

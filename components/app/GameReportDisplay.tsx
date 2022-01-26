@@ -19,8 +19,9 @@ const GameReportDisplay = ({ words, target }: { words: string[]; target: string 
             guesses: [],
         };
         let possibilities = buildStartingClues();
+        let required: string[] = [];
         for (let i = 0; i < words.length; i++) {
-            const guessState = getCluesAfterGuess(words[i], target, possibilities);
+            const guessState = getCluesAfterGuess(words[i], target, possibilities, required);
 
             const state: GameState = {
                 guess: words[i],
@@ -29,7 +30,9 @@ const GameReportDisplay = ({ words, target }: { words: string[]; target: string 
                 validWordsBefore:
                     i === 0 ? targetWords.length : gr.guesses.slice(-1)[0].validWords.length,
                 evaluationAfter: evaluateGuess(words[i], target),
+                requiredAfter: guessState.required,
             };
+            required = guessState.required;
             possibilities = guessState.possibilities;
 
             console.log(state);
@@ -52,6 +55,7 @@ const GameReportDisplay = ({ words, target }: { words: string[]; target: string 
                         validWords={guess.validWords}
                         possibilities={guess.cluesAfter}
                         validWordsBefore={guess.validWordsBefore}
+                        required={guess.requiredAfter}
                     />
                 );
             })}
